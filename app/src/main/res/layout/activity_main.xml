@@ -47,5 +47,6 @@
         style="@style/AppTheme.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:text="@string/save_qr_code" />
 </LinearLayout>

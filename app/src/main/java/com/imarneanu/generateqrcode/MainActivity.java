@@ -23,10 +23,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private Button mSaveQRCode;
+    @BindView(R.id.qr_input)
+    EditText mQRInputEditText;
+    @BindView(R.id.qr_imageView)
+    ImageView mQRImageView;
+    @BindView(R.id.save_qrCode)
+    Button mSaveQRCodeButton;
 
     private String mQRInput;
     private Bitmap mQRBitmap;
@@ -35,18 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button generateQRCode = (Button) findViewById(R.id.generate_qrCode);
-        generateQRCode.setOnClickListener(this);
-
-        mSaveQRCode = (Button) findViewById(R.id.save_qrCode);
-        mSaveQRCode.setOnClickListener(this);
-        mSaveQRCode.setEnabled(false);
+        ButterKnife.bind(this);
     }
 
     private void generateQRCode() {
-        EditText input = (EditText) findViewById(R.id.qr_input);
-        mQRInput = input.getText().toString();
+        mQRInput = mQRInputEditText.getText().toString();
         String url = BuildConfig.BASE_URL.concat(mQRInput);
         Log.v(TAG, url);
 
@@ -68,9 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 smallerDimension);
         try {
             mQRBitmap = qrCodeEncoder.encodeAsBitmap();
-            ImageView myImage = (ImageView) findViewById(R.id.qr_imageView);
-            myImage.setImageBitmap(mQRBitmap);
-            mSaveQRCode.setEnabled(true);
+            mQRImageView.setImageBitmap(mQRBitmap);
+            mSaveQRCodeButton.setEnabled(true);
         } catch (WriterException e) {
             Log.e(TAG, e.getMessage(), e);
         }
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
+    @OnClick({R.id.generate_qrCode, R.id.save_qrCode})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.generate_qrCode:
