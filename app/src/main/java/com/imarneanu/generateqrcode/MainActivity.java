@@ -23,6 +23,8 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private Button mSaveQRCode;
+
     private String mQRInput;
     private Bitmap mQRBitmap;
 
@@ -34,11 +36,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button generateQRCode = (Button) findViewById(R.id.generate_qrCode);
         generateQRCode.setOnClickListener(this);
 
-        ImageView qrCode = (ImageView) findViewById(R.id.qr_imageView);
-        qrCode.setOnClickListener(this);
+        mSaveQRCode = (Button) findViewById(R.id.save_qrCode);
+        mSaveQRCode.setOnClickListener(this);
+        mSaveQRCode.setEnabled(false);
     }
 
-    private void onGenerateQRCode() {
+    private void generateQRCode() {
         EditText input = (EditText) findViewById(R.id.qr_input);
         mQRInput = input.getText().toString();
         String url = BuildConfig.BASE_URL.concat(mQRInput);
@@ -64,14 +67,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mQRBitmap = qrCodeEncoder.encodeAsBitmap();
             ImageView myImage = (ImageView) findViewById(R.id.qr_imageView);
             myImage.setImageBitmap(mQRBitmap);
-
+            mSaveQRCode.setEnabled(true);
         } catch (WriterException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         }
     }
 
     private void saveQRCode() {
-        // path to /storage/emulated/0/qrCodes
+        // path to /storage/emulated/0/media/qrCodes
         File folder = new File(Environment.getExternalStorageDirectory(), "/media/qrCodes");
         if (!folder.exists()) {
             folder.mkdirs();
@@ -86,12 +89,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Use the compress method on the BitMap object to write image to the OutputStream
             mQRBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
         } finally {
             try {
                 fos.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage(), e);
             }
         }
     }
@@ -100,12 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.generate_qrCode:
-                onGenerateQRCode();
+                generateQRCode();
                 break;
-            case R.id.qr_imageView:
+            case R.id.save_qrCode:
                 saveQRCode();
                 break;
-            default:
         }
     }
 }

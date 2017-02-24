@@ -3,4 +3,5 @@
 
     <string name="param">Param</string>
     <string name="generate_qr_code">Generate QR Code</string>
+    <string name="save_qr_code">Save QR Code</string>
 </resources>

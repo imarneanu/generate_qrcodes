@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryTransparent">#B30A75B0</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
 
-    <color name="colorPrimaryTransparent">#B30A75B0</color>
-    <color name="light_blue">#4999C5</color>
+    <color name="colorButtonDisabled">#E0E0E0</color>
 </resources>
