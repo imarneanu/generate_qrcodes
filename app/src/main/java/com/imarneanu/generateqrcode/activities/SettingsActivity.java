@@ -1,4 +1,6 @@
-package com.imarneanu.generateqrcode;
+package com.imarneanu.generateqrcode.activities;
+
+import com.imarneanu.generateqrcode.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
