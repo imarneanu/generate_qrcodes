@@ -92,11 +92,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendEmail() {
+        // Get base url from preferences - if none saved, use the one defined in gradle.properties
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String email = sharedPreferences.getString("email", null);
+
+        if (email == null) {
+            Crouton.makeText(this, getString(R.string.email_none_saved), Style.ALERT).show();
+            return;
+        }
+
         File fileLocation = QRCodeUtils.getFileLocation(mQRInput);
         Uri path = Uri.fromFile(fileLocation);
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType("vnd.android.cursor.dir/email");
-        String to[] = {"test@gmail.com"};
+        String to[] = {email};
         emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
         emailIntent.putExtra(Intent.EXTRA_STREAM, path);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));

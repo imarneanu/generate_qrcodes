@@ -13,6 +13,7 @@
     <!-- Email -->
     <string name="email_subject">QR Codes</string>
     <string name="email_chooser">Send email...</string>
+    <string name="email_none_saved">Please add email recipient in Settings!</string>
 
     <!-- Messages -->
     <string name="qr_code_saved">QR Code successfully saved!</string>
