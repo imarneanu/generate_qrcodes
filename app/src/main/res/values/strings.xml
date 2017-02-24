@@ -8,6 +8,11 @@
     <string name="param">Param</string>
     <string name="generate_qr_code">Generate QR Code</string>
     <string name="save_qr_code">Save QR Code</string>
+    <string name="send_email">Send email</string>
+
+    <!-- Email -->
+    <string name="email_subject">QR Codes</string>
+    <string name="email_chooser">Send email...</string>
 
     <!-- Messages -->
     <string name="qr_code_saved">QR Code successfully saved!</string>

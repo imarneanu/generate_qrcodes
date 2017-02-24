@@ -51,12 +51,12 @@ public class QRCodeUtils {
     public static boolean saveQRCode(Bitmap bitmap, String fileName) {
         boolean saved = false;
         // path to /storage/emulated/0/media/qrCodes
-        File folder = new File(Environment.getExternalStorageDirectory(), "/media/qrCodes");
+        File folder = getFolder();
         if (!folder.exists()) {
             folder.mkdirs();
         }
         Log.v(TAG, folder.getAbsolutePath());
-        File myPath = new File(folder, fileName.concat(".png"));
+        File myPath = getFileLocation(fileName);
         Log.v(TAG, myPath.getAbsolutePath());
 
         FileOutputStream fos = null;
@@ -77,4 +77,11 @@ public class QRCodeUtils {
         return saved;
     }
 
+    public static File getFileLocation(String fileName) {
+        return new File(getFolder(), fileName.concat(".png"));
+    }
+
+    private static File getFolder() {
+        return new File(Environment.getExternalStorageDirectory(), "/media/qrCodes");
+    }
 }

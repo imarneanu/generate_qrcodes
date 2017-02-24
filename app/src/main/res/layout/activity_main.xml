@@ -47,6 +47,15 @@
         style="@style/AppTheme.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:enabled="false"
         android:text="@string/save_qr_code" />
+
+    <Button
+        android:id="@+id/send_email"
+        style="@style/AppTheme.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/send_email" />
 </LinearLayout>

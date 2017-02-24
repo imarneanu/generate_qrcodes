@@ -8,6 +8,7 @@ import com.imarneanu.generateqrcode.qrgenerator.QRCodeUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView mQRImageView;
     @BindView(R.id.save_qrCode)
     Button mSaveQRCodeButton;
+    @BindView(R.id.send_email)
+    Button mSendEmailButton;
 
     private String mQRInput;
     private Bitmap mQRBitmap;
@@ -83,9 +88,22 @@ public class MainActivity extends AppCompatActivity {
         boolean saved = QRCodeUtils.saveQRCode(mQRBitmap, mQRInput);
         Crouton.makeText(this, getString(saved ? R.string.qr_code_saved : R.string.qr_code_error),
                 saved ? Style.CONFIRM : Style.ALERT).show();
+        mSendEmailButton.setEnabled(saved);
     }
 
-    @OnClick({R.id.generate_qrCode, R.id.save_qrCode})
+    private void sendEmail() {
+        File fileLocation = QRCodeUtils.getFileLocation(mQRInput);
+        Uri path = Uri.fromFile(fileLocation);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("vnd.android.cursor.dir/email");
+        String to[] = {"test@gmail.com"};
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.email_chooser)));
+    }
+
+    @OnClick({R.id.generate_qrCode, R.id.save_qrCode, R.id.send_email})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.generate_qrCode:
@@ -94,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.save_qrCode:
                 saveQRCode();
+                break;
+            case R.id.send_email:
+                sendEmail();
                 break;
         }
     }
