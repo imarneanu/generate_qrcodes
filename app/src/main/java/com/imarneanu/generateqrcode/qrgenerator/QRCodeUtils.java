@@ -3,10 +3,11 @@ package com.imarneanu.generateqrcode.qrgenerator;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
+import com.imarneanu.generateqrcode.Utils;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -51,12 +52,12 @@ public class QRCodeUtils {
     public static boolean saveQRCode(Bitmap bitmap, String fileName) {
         boolean saved = false;
         // path to /storage/emulated/0/media/qrCodes
-        File folder = getFolder();
+        File folder = Utils.getFolder();
         if (!folder.exists()) {
             folder.mkdirs();
         }
         Log.v(TAG, folder.getAbsolutePath());
-        File myPath = getFileLocation(fileName);
+        File myPath = Utils.getFileLocation(fileName);
         Log.v(TAG, myPath.getAbsolutePath());
 
         FileOutputStream fos = null;
@@ -75,13 +76,5 @@ public class QRCodeUtils {
             }
         }
         return saved;
-    }
-
-    public static File getFileLocation(String fileName) {
-        return new File(getFolder(), fileName.concat(".png"));
-    }
-
-    private static File getFolder() {
-        return new File(Environment.getExternalStorageDirectory(), "/media/qrCodes");
     }
 }

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     private String mQRInput;
     private Bitmap mQRBitmap;
+    private ArrayList<String> mQRCodeFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mQRCodeFiles = new ArrayList<>();
     }
 
     @Override
@@ -89,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
         Crouton.makeText(this, getString(saved ? R.string.qr_code_saved : R.string.qr_code_error),
                 saved ? Style.CONFIRM : Style.ALERT).show();
         mSendEmailButton.setEnabled(saved);
+        if (saved) {
+            mQRCodeFiles.add(mQRInput.concat(".png"));
+            mSendEmailButton.setText(getString(R.string.send_email).concat(" (")
+                    .concat(String.valueOf(mQRCodeFiles.size())).concat(")"));
+        }
     }
 
     private void sendEmail() {
@@ -101,8 +110,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        File fileLocation = QRCodeUtils.getFileLocation(mQRInput);
-        Uri path = Uri.fromFile(fileLocation);
+        Uri path;
+        String fileName = mQRInput;
+        if (mQRCodeFiles.size() > 1) {
+            Utils.zip(mQRCodeFiles, "qrCodes.zip");
+            path = Uri.fromFile(Utils.getZipFolder("qrCodes.zip"));
+        } else {
+            File fileLocation = Utils.getFileLocation(fileName);
+            path = Uri.fromFile(fileLocation);
+        }
+
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType("vnd.android.cursor.dir/email");
         String to[] = {email};
