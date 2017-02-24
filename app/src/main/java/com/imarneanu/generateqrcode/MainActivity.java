@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -92,8 +95,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fos = new FileOutputStream(myPath);
             // Use the compress method on the BitMap object to write image to the OutputStream
             mQRBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            Crouton.makeText(this, getString(R.string.qr_code_saved), Style.CONFIRM).show();
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
+            Crouton.makeText(this, getString(R.string.qr_code_error), Style.ALERT).show();
         } finally {
             try {
                 fos.close();
