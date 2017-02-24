@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void generateQRCode() {
         // Get base url from preferences - if none saved, use the one defined in gradle.properties
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String baseUrl = sharedPreferences.getString("baseUrl", BuildConfig.BASE_URL);
+        String baseUrl = sharedPreferences.getString(getString(R.string.pref_base_url), BuildConfig.BASE_URL);
 
         mQRInput = mQRInputEditText.getText().toString();
         String url = baseUrl.concat(mQRInput);
@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         mQRImageView.setImageBitmap(mQRBitmap);
         // Enable QR Code saving
         mSaveQRCodeButton.setEnabled(true);
+        // Disable email until qr code saved
+        mSendEmailButton.setEnabled(false);
     }
 
     private void saveQRCode() {
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendEmail() {
         // Get base url from preferences - if none saved, use the one defined in gradle.properties
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String email = sharedPreferences.getString("email", null);
+        String email = sharedPreferences.getString(getString(R.string.pref_email), null);
 
         if (email == null) {
             Crouton.makeText(this, getString(R.string.email_none_saved), Style.ALERT).show();

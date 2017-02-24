@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:key="baseUrl"
+        android:key="@string/pref_base_url"
         android:summary="Please provide base url"
         android:title="BASE URL" />
     <EditTextPreference
-        android:key="email"
+        android:key="@string/pref_email"
         android:summary="Please provide email address"
         android:title="Email address" />
 </PreferenceScreen>
