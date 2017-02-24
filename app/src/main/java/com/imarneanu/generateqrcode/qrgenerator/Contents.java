@@ -1,4 +1,4 @@
-package com.imarneanu.generateqrcode;
+package com.imarneanu.generateqrcode.qrgenerator;
 
 import android.provider.ContactsContract;
 

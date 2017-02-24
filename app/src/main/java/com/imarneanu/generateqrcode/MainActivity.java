@@ -3,6 +3,9 @@ package com.imarneanu.generateqrcode;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
+import com.imarneanu.generateqrcode.qrgenerator.Contents;
+import com.imarneanu.generateqrcode.qrgenerator.QRCodeEncoder;
+
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.generate_qrCode:
+                Utils.hideKeyboard(this);
                 generateQRCode();
                 break;
             case R.id.save_qrCode:
