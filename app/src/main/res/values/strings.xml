@@ -2,6 +2,7 @@
     <string name="app_name">GenerateQRCode</string>
 
     <!-- Menu -->
+    <string name="menu_action_share">Share</string>
     <string name="menu_action_settings">Settings</string>
 
     <!-- Preferences -->
@@ -17,9 +18,10 @@
     <!-- Email -->
     <string name="email_subject">QR Codes</string>
     <string name="email_chooser">Send email...</string>
-    <string name="email_none_saved">Please add email recipient in Settings!</string>
 
     <!-- Messages -->
     <string name="qr_code_saved">QR Code successfully saved!</string>
     <string name="qr_code_error">QR Code could not be saved!</string>
+    <string name="email_none_saved">Please add email recipient in Settings!</string>
+    <string name="error_generate_qr_code">Please generate and save a QR Code before sharing!</string>
 </resources>

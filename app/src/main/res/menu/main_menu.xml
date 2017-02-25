@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.MainActivity">
     <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/icon_share"
+        android:title="@string/menu_action_share"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/icon_settings"
         android:title="@string/menu_action_settings"

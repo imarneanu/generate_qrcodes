@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_share:
+                shareQRCode();
+                return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -145,5 +148,17 @@ public class MainActivity extends AppCompatActivity {
                 sendEmail();
                 break;
         }
+    }
+
+    private void shareQRCode() {
+        if (mQRCodeFiles.size() == 0 || !mSendEmailButton.isEnabled()) {
+            Crouton.makeText(this, getString(R.string.error_generate_qr_code), Style.ALERT).show();
+            return;
+        }
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setType("image/png");
+        Uri uri = Uri.fromFile(Utils.getFileLocation(mQRInput));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(shareIntent, "Share Image Tutorial"));
     }
 }
